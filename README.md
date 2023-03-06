@@ -47,6 +47,46 @@ Após isso envie uma requisição para:
 > http://localhost:8082/pedidos-ms/pedidos/porta. 
 
 A cada envio, observe no powershel que ele já exibe a mensagem "Requisição respondida pela instância executando na porta <xxxxx>". Selecionando novamente o botão "Send" aparece a porta <yyyyy>, a cada vez que enviarmos observe que ele vai trocando as portas.
+  
+#### Endpoints para testar:
+
+### pedidos 
+````
+### Verificar porta do balanceamento de carga
+GET http://localhost:8082/pedidos-ms/pedidos/porta
+
+### Buscar pedidos registrados
+GET http://localhost:8082/pedidos-ms/pedidos
+
+### Buscar pedido id = 1
+GET http://localhost:8082/pedidos-ms/pedidos/1
+
+### Realizar um pedido
+POST http://localhost:8082/pedidos-ms/pedidos
+Content-Type: application/json
+
+{
+  "itens": [
+    {
+      "quantidade": 1,
+      "descricao": "livro java"
+    },
+    {
+      "quantidade": 2,
+      "descricao": "caneta bic"
+    }
+  ]
+} 
+````
+
+### pagamentos: 
+```
+### Verificar status de pagamento do pedido id = 1
+GET http://localhost:8082/pagamentos-ms/pagamentos/1
+
+### Confirmar pagamento do pedido id = 1. É executado quando o pagamento se comunica com o pedido. Retorna pagamento confirmado ou FallbackMethod.
+PATCH http://localhost:8082/pagamentos-ms/pagamentos/1/confirmar 
+```
 
 #### *Done List*
 - Serviços *pagamentos* e *pedidos*
