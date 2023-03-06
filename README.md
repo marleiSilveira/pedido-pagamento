@@ -15,10 +15,38 @@ Exemplo de app com Spring Cloud: Service Discovery, API Gateway, Open Feign, Cir
 - Lombok
 - Flyway - Migrations
 
-#### Executano a API
-Para este projeto é necessário ter o docker, maven, java 17 instalados.
+### Executano a API
+Requisitos mínimos: Maven, Java 17, MySQl 8.
 
+Após clonar o projeto: `git clone https://github.com/marleiSilveira/pedido-pagamento.git`
 
+Entre nos diretórios (sendo que o *Server* deve ser o primeiro a ser executado) e execute em cada um deles com: `mvn spring-boot:run`
+
+Diretorios para executar: 
+
+> server</br>
+> gateway</br>
+> pedido</br>
+> pagamento</br>
+
+Após executar a aplicação, para visualizar o Eureka Server acesse: 
+
+> http://localhost:8761/
+
+Deverá aparecer as seguintes instâncias:
+
+<img width="665" alt="image" src="https://user-images.githubusercontent.com/42658870/223123448-67ef45c0-e8bc-4cfd-b61c-461dbe573c40.png">
+
+> O Spring Cloud Gateway, obtém a lista de endereços de todos os serviços registrados no Eureka Server, configura uma rota dinâmica para esses serviços e já faz o balanceamento de carga nas requisições.
+
+Para executar mais instâncias do 'pedido' e ver o balanceamento de carga em ação execute no powershel o comando: 
+`& ".\pedidos\mvnw.cmd" spring-boot:run -f ".\pedidos\pom.xml"`
+
+Após isso envie uma requisição para: 
+
+> http://localhost:8082/pedidos-ms/pedidos/porta. 
+
+A cada envio, observe no powershel que ele já exibe a mensagem "Requisição respondida pela instância executando na porta <xxxxx>". Selecionando novamente o botão "Send" aparece a porta <yyyyy>, a cada vez que enviarmos observe que ele vai trocando as portas.
 
 #### *Done List*
 - Serviços *pagamentos* e *pedidos*
