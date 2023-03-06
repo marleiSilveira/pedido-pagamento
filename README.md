@@ -106,3 +106,25 @@ PATCH http://localhost:8082/pagamentos-ms/pagamentos/1/confirmar
 - Testes
 - Sonar
 - Jenkins
+
+#### Melhorias
+Atualmente quando o serviço de *pagamento* recebe o pagamento e confirma, manda mensagem para o serviço de *pedido* que está esperando a confirmação para finalizar o pedido.
+
+No serviço de *pagamento* foi colocado uma interface com o FeignClient indicando o serviço de *pedido* e no *@service* de *pagamento* é feito uma chamada para o FeignClient para confirmar o pagamento.
+
+Foi necessário implementar um método Fallback para caso o pedido não estivesse operando.
+
+##### Problema
+- transferência de responsabilidade, pois quando *pedido* esta fora do ar o estatus do pagamento altera para **confirmado_sem_integração**, para mais tarde integrar ao pedido.
+- acoplamento, os serviços se comunicam diretamente entre si.
+
+##### Solução
+Colocar um *Message Broker* na camada intermediária entre os serviços.
+
+<img width="353" alt="image" src="https://user-images.githubusercontent.com/42658870/223176438-f8bbbbab-2c79-4665-8681-2985ac4bb6d0.png">
+
+[Aqui](https://github.com/marleiSilveira/rabbitmq-pedido-pg) foi feito a implementação do RabbitMQ para a comunicação entre os serviços.
+
+
+
+
