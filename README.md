@@ -1,9 +1,11 @@
 # pedido-pagamento
 Exemplo de app com Spring Cloud: Service Discovery, API Gateway, Open Feign, Circuit Braker, fallback
 
-### Contextos:
-- Serviço pagamentos: dado um pedido, é selecionado realizar pagamento, se o serviço de pedido está normal o pagamento é confirmado no serviço de pedido. Caso contrário existe um fallback que informa que pagamento foi recebido mas não integrado.
-- Serviço pedidos: dado um pedido com uma lista de itens, o 'pedidos' se comunica com o serviço de pagamentos para efetivar a compra.
+### Contextos e services:
+> - **Server**: Projeto que serve como service discovery, utilizando Eureka Server. Após a sua execução, o acesso é feito por meio do endereço http://localhost:8761;</br>
+> - **Gateway**: Projeto que atua como API Gateway, também utilizando ferramentas do Spring Cloud;</br>
+> - **pagamento**: Microsserviço de pagamentos com banco de dados MySQL. Após executar o Server, o Gateway e esse projeto, o acesso é feito por meio do endereço http://localhost:8082/pagamentos-ms/pagamentos. Dado um pedido, é selecionado realizar pagamento, se o serviço de pedido está normal o pagamento é confirmado no serviço de pedido. Caso contrário existe um fallback que informa que pagamento foi recebido mas não integrado.</br>
+> - **pedido**: Microsserviço de pedidos com banco de dados MySQL. Após executar o Server, o Gateway e esse projeto, o acesso é realizado pelo endereço http://localhost:8082/pedidos-ms/pedidos; Dado um pedido com uma lista de itens, o 'pedidos' se comunica com o serviço de pagamentos para efetivar a compra.
 
 ## Tecnologias
 - Spring Cloud 2021.0.5
